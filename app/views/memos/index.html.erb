@@ -1,0 +1,23 @@
+<div class="container">
+<div class="col-sm-7">
+
+
+<%= form_tag("/create") do %>
+    <div class="form-group">
+        <p>西暦→和暦</p>
+        
+        
+        <%= label_tag "form-title", "変換したい西暦" %>
+        <P>2010年1月1日を調べたい場合、20100101と入力してください。</P>
+        <%= text_field :memos, :datetime, id:"form-memo", class:"form-control", placeholder:"ex)19951029"%>
+        
+        <p>   </p>
+        <p>   </p>
+        
+        <%= label_tag "form-title", "メモ" %>
+        <%= text_field :memos, :memo, id:"form-memo", class:"form-control", placeholder:"ex)誕生日"%>
+    </div>
+    <%= submit_tag "保存する", class:"btn btn-default"%>
+<% end %>
+</div>
+</div>
