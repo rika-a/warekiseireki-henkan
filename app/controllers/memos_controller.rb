@@ -9,7 +9,8 @@ class MemosController < ApplicationController
     end
     
     def show
-        @memos = Memo.all
+        #@user = User.find(params[:id]) #自分のメモだけ見れる
+        @memos = Memo.all #自分のメモだけ持ってくる
     end
     
     def destroy

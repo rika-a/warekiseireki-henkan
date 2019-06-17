@@ -1,23 +1,30 @@
 <div class="container">
 <div class="col-sm-7">
 
-
 <%= form_tag("/create") do %>
     <div class="form-group">
         <p>西暦→和暦</p>
         
-        
         <%= label_tag "form-title", "変換したい西暦" %>
-        <p>2010年1月1日を調べたい場合、20100101と入力してください。</p>
-        <%= text_field :memos, :datetime, id:"form-memo", class:"form-control", placeholder:"ex)19951029"%>
-        
+        <p>1999年08月10日の和暦を調べたい場合、19990810と入力してください。</p>
+        <%= text_field :memos, :datetime, id:"form-memo", class:"form-control", placeholder:"ex)19951029" required %>
+        <p> </p>
+        <button type="button" class="btn btn-default">変換する</button>
          
-        <p>   </p>
+        <p> </p>
+        
         
         <%= label_tag "form-title", "メモ" %>
         <%= text_field :memos, :memo, id:"form-memo", class:"form-control", placeholder:"ex)誕生日"%>
-    </div>
-    <%= submit_tag "保存する", class:"btn btn-default"%>
+        <p> </p>
+    
+    <!--ログイン前後で場合分け -->
+    <!-- login機能追加-->
+    <% if logged_in? %>
+    	<%= submit_tag "保存する", class:"btn btn-default"%>
+    <% else %>
+    	<%= submit_tag "保存する(保存には会員登録が必要です)", class:"btn btn-default"%>
+    <% end %>
 <% end %>
 </div>
 </div>
