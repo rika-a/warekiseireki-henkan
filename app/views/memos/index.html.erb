@@ -1,30 +1,174 @@
-<div class="container">
-<div class="col-sm-7">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+</head>
 
+<body>
+
+<div class="row">
+  <div class="col-xs-offset-3 col-xs-6">
+<div class="center">
+<div class="panel panel-default">
+  <div class="panel-body">
+  
 <%= form_tag("/create") do %>
     <div class="form-group">
-        <p>西暦→和暦</p>
+      
+        <%= label_tag "form-title", "変換したい西暦を入力すると、下に表示されます" %>
+        <p></p>
         
-        <%= label_tag "form-title", "変換したい西暦" %>
-        <p>1999年08月10日の和暦を調べたい場合、19990810と入力してください。</p>
-        <%= text_field :memos, :datetime, id:"form-memo", class:"form-control", placeholder:"ex)19951029" required %>
-        <p> </p>
-        <button type="button" class="btn btn-default">変換する</button>
-         
-        <p> </p>
-        
+        <input type="date" id="c" value="1892-05-01" name="memos[datetime]">
+        <h2 id="wareki"></h2>
+        <input type="hidden" id="a" value="" name="memos[wareki]">
+        <p></p>
         
         <%= label_tag "form-title", "メモ" %>
-        <%= text_field :memos, :memo, id:"form-memo", class:"form-control", placeholder:"ex)誕生日"%>
+        
+        
+        <%= text_field :memos, :memo, id:"form-memo", class:"form-control", placeholder:"ex)芥川龍之介の誕生日"%>
+        
         <p> </p>
     
     <!--ログイン前後で場合分け -->
     <!-- login機能追加-->
     <% if logged_in? %>
-    	<%= submit_tag "保存する", class:"btn btn-default"%>
+    	<%= submit_tag "保存する", class:"btn btn-success"%>
     <% else %>
-    	<%= submit_tag "保存する(保存には会員登録が必要です)", class:"btn btn-default"%>
+    	<%= submit_tag "保存する", class:"btn btn-default"%>
+    	<p>※保存には会員登録・ログインが必要です</p>
     <% end %>
 <% end %>
+
 </div>
 </div>
+</div>
+</div>
+</div>
+
+<script>
+
+var c = document.getElementById('c');
+var a = document.getElementById('a');
+var wareki = document.getElementById('wareki');
+var calc = function() {
+  var d = new Date(c.value);
+ 
+  // 和暦の元年のはじまり
+  var w = {
+    '令和': '2019/05/01',
+    '平成': '1989/01/08',
+    '昭和': '1926/12/25',
+    '大正': '1912/07/30',
+    '明治': '1868/01/25',
+    '慶応': '1865/05/01',
+    '元治': '1864/03/27',
+    '文久': '1861/03/29',
+    '万延': '1860/04/08',
+    '安政': '1855/01/15',
+    '嘉永': '1848/04/01',
+    '弘化': '1845/01/09',
+    '天保': '1831/01/23',
+    '文政': '1818/05/26',
+    '文化': '1804/03/22',
+    '享和': '1801/03/19',
+    '寛政': '1789/02/19',
+    '天明': '1781/04/25',
+    '安永': '1772/12/10',
+    '明和': '1764/06/30',
+  };
+ 
+  if (d < new Date(w['明和'])) {
+    wareki.textContent = 'このサイトでは明和以降を調べることができます。';
+  }
+  var y = d.getFullYear();
+  var r = d.toLocaleDateString('ja-JP-u-ca-japanese');
+ 
+  if (r === 'Invalid Date') {
+    wareki.textContent = '変換したい西暦を入力してください';
+    return;
+  }
+  r = r.replace(/^.*?(\d{1,2}).+?$/g, '$1');
+  var getDate = function(x, r, d) {
+    a.value = x + r + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日';
+    wareki.textContent = x + r + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日';
+  }
+  
+ 
+  // 1年は元年と表記
+  if (Number(r) === 1) r = '元';
+ 
+  if (d >= new Date(w['令和'])) {
+    if (r > 30) r -= 30;
+    r = r === 1 ? '元' : r;
+    getDate('令和', r, d);
+  }
+  else if (d >= new Date(w['平成'])) {
+    getDate('平成', r, d);
+  }
+  else if (d >= new Date(w['昭和'])) {
+    getDate('昭和', r, d);
+  }
+  else if (d >= new Date(w['大正'])) {
+    getDate('大正', r, d);
+  }
+  else if (d >= new Date(w['明治'])) {
+    getDate('明治', r, d);
+  }
+  else if (d >= new Date(w['慶応'])) {
+    getDate('慶応', r, d);
+  }
+  else if (d >= new Date(w['元治'])) {
+    getDate('元治', r, d);
+  }
+  else if (d >= new Date(w['文久'])) {
+    getDate('文久', r, d);
+  }
+  else if (d >= new Date(w['万延'])) {
+    getDate('万延', r, d);
+  }
+  else if (d >= new Date(w['安政'])) {
+    getDate('安政', r, d);
+  }
+  else if (d >= new Date(w['嘉永'])) {
+    getDate('嘉永', r, d);
+  }
+  else if (d >= new Date(w['弘化'])) {
+    getDate('弘化', r, d);
+  }
+  else if (d >= new Date(w['天保'])) {
+    getDate('天保', r, d);
+  }
+  else if (d >= new Date(w['文政'])) {
+    getDate('文政', r, d);
+  }
+  else if (d >= new Date(w['文化'])) {
+    getDate('文化', r, d);
+  }
+  else if (d >= new Date(w['享和'])) {
+    getDate('享和', r, d);
+  }
+  else if (d >= new Date(w['寛政'])) {
+    getDate('寛政', r, d);
+  }
+  else if (d >= new Date(w['天明'])) {
+    getDate('天明', r, d);
+  }
+  else if (d >= new Date(w['安永'])) {
+    getDate('安永', r, d);
+  }
+  else if (d >= new Date(w['明和'])) {
+    getDate('明和', r, d);
+  }
+  
+}
+calc();
+ 
+c.addEventListener('input', function() {
+  calc();
+});
+
+</script>
+</form>
+</html>

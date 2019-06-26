@@ -2,6 +2,10 @@ class UsersController < ApplicationController
   before_action :require_user_logged_in, only: [:index, :show]
   
   def show
+    
+    #自分のメモだけ持ってくる
+    @memos = current_user.memos
+
   end
 
   def new

@@ -1,0 +1,33 @@
+<div class="container">
+    
+<h3>あなたのメモ</h3>
+    
+    
+        <table class="table">
+            <thead>
+                <tr>
+                  <th></th>
+                  <th>メモ</th>
+                  <th>西暦</th>
+                  <th>和暦</th>
+                </tr>
+            </thead>
+        
+            
+            <tbody>
+              <% @memos.each do |memo| %>
+                    
+                <tr style="table-layout:fixed;">
+                 
+                    <td><a href="memos/<%=memo.id%>" data-method="delete"><span class="glyphicon glyphicon-trash"></span></a></td>
+                    <td style="width:400px;"><%= memo.what%></td>
+                    <td style="width:300px;"><%= memo.when%></td>
+                    <td style="width:300px;"><%= memo.wareki%></td>
+                  
+                </tr>
+                
+            </tbody><% end %>
+            
+        </table>
+
+</div>

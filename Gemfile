@@ -71,3 +71,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+#和暦・西暦の変換に必要なgem
+gem 'wareki'

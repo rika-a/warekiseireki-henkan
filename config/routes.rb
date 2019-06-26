@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   
   
   post "/create", to:"memos#create"
-  get "/show", to:"memos#show"
+  get "/show", to:"users#show"
+  
   delete "/memos/:id", to:"memos#destroy"
 end
+
